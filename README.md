@@ -13,13 +13,13 @@ This automation is best executed within the Luna Lab environment using Visual St
 
 1. Launch Lab
 
-    1.1. Wait until the lab ressources are provisioned. Setting up the underlying OKE cluster as pre-requisite is part of the free lab provisioning process and takes approximately > 5 minutes to finish after launch. Unlike other Luna Labs, the Resources Tab on Luna Lab page does only show a checkmark once provisioning is finished (no resource details) 
+    1.1. Wait until the lab ressources are provisioned. Setting up the underlying OKE cluster as pre-requisite is part of the free lab provisioning process and takes approximately > 10 minutes to finish after launch. Unlike other Luna Labs, the Resources Tab on Luna Lab page does only show a checkmark once provisioning is finished (no resource details) 
 
 2. Checkout this git repo in Luna Lab Visual Studio Code
 
     2.1 Open Visual Studio Code. Select Topmost left Icon ("Explorer") and press "Clone Repository" button.
     
-    Provide github URL: https://github.com/lschubert/oci-lab-metallb.git
+    Provide github URL: https://github.com/lschubert/oci-lab-ocne-metallb.git
     
     Select "Open Folder" and choose the local path of cloned repo
 
