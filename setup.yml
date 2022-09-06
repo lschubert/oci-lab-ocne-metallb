@@ -1,14 +1,14 @@
 ---
-# - name: Configure executor
-#   hosts: localhost
-#   vars_files: main.yml
-#   roles:
-#     - { role: configure-executor }
-# - name: Configure OCNE Nodes
-#   hosts: ocne-control, ocne-worker
-#   vars_files: main.yml
-#   roles:
-#     - { role: configure-nodes }
+- name: Configure executor
+  hosts: localhost
+  vars_files: main.yml
+  roles:
+    - { role: configure-executor }
+- name: Configure OCNE Nodes
+  hosts: ocne-control, ocne-worker
+  vars_files: main.yml
+  roles:
+    - { role: configure-nodes }
 - name: Install Modules
   hosts: ocne-operator
   vars_files: main.yml
