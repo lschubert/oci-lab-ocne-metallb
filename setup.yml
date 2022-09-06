@@ -14,3 +14,9 @@
   vars_files: main.yml
   roles:
     - { role: install-metallb }
+- name: Install Application
+  hosts: ocne-control[0]
+  vars_files: main.yml
+  roles:
+    - { role: install-application }
+
