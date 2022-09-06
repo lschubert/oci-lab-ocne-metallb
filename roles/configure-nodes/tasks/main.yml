@@ -1,1 +1,12 @@
 ---
+- name: Configure the firewall 
+  firewalld:
+    port: "{{ item }}"
+    zone: public
+    permanent: yes
+    immediate: yes
+    state: enabled
+  become: true  
+  loop:
+    - 7946/tcp
+    - 7946/udp

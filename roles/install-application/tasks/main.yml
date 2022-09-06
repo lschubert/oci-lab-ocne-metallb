@@ -1,0 +1,36 @@
+---
+- name: Copy Application Configuration File
+  copy:
+    src: files/echo-oci-lb.yml
+    dest: ${HOME}/echo-oci-lb.yml
+  become_user: "{{ install_user }}"
+- name: Create LB Service
+  shell: |
+    kubectl create -f echo-oci-lb.yml
+  becom_user: "{{ install_user }}"
+  register: kubectl_create_app
+- name: DEBUG output
+  debug:
+    var: kubectl_create_app
+  when: debug_output == true
+- name: Gather deployment 
+  shell: |
+    kubectl get deployment
+  becom_user: "{{ install_user }}"
+  register: kubectl_get_deployment
+- name: DEBUG output
+  debug:
+    var: kubectl_get_deployment
+  when: debug_output == true
+- name: Gather service
+  shell: |
+    kubectl get svc
+  becom_user: "{{ install_user }}"
+  register: kubectl_get_svc
+- name: DEBUG output
+  debug:
+    var: kubectl_get_svc
+  when: debug_output == true
+- name: Set facts
+  set_fact:
+    external_ip: ""

@@ -4,3 +4,13 @@
   vars_files: main.yml
   roles:
     - { role: configure-executor }
+- name: Configure executor
+  hosts: ocne-control, ocne-worker
+  vars_files: main.yml
+  roles:
+    - { role: configure-nodes }
+- name: Install Modules
+  hosts: ocne-operator
+  vars_files: main.yml
+  roles:
+    - { role: install-metallb }

@@ -1,0 +1,56 @@
+---
+- name: Create MetalLB configuration file
+  copy:
+    src: files/metallb-config.yaml
+    dest: ${HOME}/metallb-config.yaml
+  become_user: "{{ install_user}}"
+- name: Add MetalLB module to Oracle Cloud Native Environment configuration file
+  blockinfile:
+    path: ${HOME}/myenvironment.yaml
+    block: |
+      - module: helm
+        name: myhelm
+        args:
+          helm-kubernetes-module: mycluster
+      - module: metallb
+        name: mymetallb
+        args: 
+          metallb-helm-module: myhelm 
+          helm-kubernetes-module: mycluster  
+          metallb-config: /home/oracle/metallb-config.yaml
+    become_user: "{{ install_user}}"
+- name: Create MetalLB module
+  shell: |
+    olcnectl module create --config-file myenvironment.yaml
+  become_user: "{{ install_user}}"
+  register: ocne_module_create
+- name: DEBUG output
+  debug:
+    var: ocne_module_create
+  when: debug_output == true
+- name: Validate MetalLB module
+  shell: |
+    olcnectl module validate --config-file myenvironment.yaml
+  become_user: "{{ install_user}}"
+  register: ocne_module_validate
+- name: DEBUG output
+  debug:
+    var: ocne_module_validate
+  when: debug_output == true
+- name: Install MetalLB module
+  shell: |
+    olcnectl module install --config-file myenvironment.yaml
+  become_user: "{{ install_user}}"
+  register: ocne_module_install
+- name: DEBUG output
+  debug:
+    var: ocne_module_install
+  when: debug_output == true
+- name: Gather installed modules
+  shell: |
+    olcnectl module instances --config-file myenvironment.yaml
+  become_user: "{{ install_user}}"
+  register: ocne_module_instances
+- name: Show installed modules
+  debug:
+    var: ocne_module_instances
