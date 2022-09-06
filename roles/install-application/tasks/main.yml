@@ -5,12 +5,19 @@
     dest: ${HOME}/echo-oci-lb.yml
   become: true
   become_user: "{{ install_user }}"
+- name: Check LB Service
+  shell: |
+    kubectl get svc echo-lb-service
+  become: true
+  become_user: "{{ install_user }}"
+  register: lb_svc_result
 - name: Create LB Service
   shell: |
-    kubectl create -f echo-oci-lb.yml
+    kubectl create -f ${HOME}/echo-oci-lb.yml
   become: true
   become_user: "{{ install_user }}"
   register: kubectl_create_app
+  when: lb_svc_result.rc == 1
 - name: DEBUG output
   debug:
     var: kubectl_create_app
@@ -46,7 +53,7 @@
     kubectl get svc -o jsonpath="{.spec.ports[0].port}" echo-lb-service
   become: true
   become_user: "{{ install_user }}"
-  register: lp_port_result
+  register: lb_port_result
 - name: Set facts
   set_fact:
     lb_ip: "{{ external_ip_result.stdout }}"
