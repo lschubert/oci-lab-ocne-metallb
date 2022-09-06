@@ -19,4 +19,8 @@
   vars_files: main.yml
   roles:
     - { role: install-application }
-
+- name: Configure Control nodes
+  hosts: ocne-control
+  vars_files: main.yml
+  roles:
+    - { role: configure-control }

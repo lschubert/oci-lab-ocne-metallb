@@ -1,0 +1,8 @@
+---
+- name: setting environment
+  lineinfile:
+    path: ~/.bashrc
+    line: "{{ item }}"
+  loop:
+    - "export LB={{ lb_ip }}"
+    - "export LBPORT={{ lb_port }}"
