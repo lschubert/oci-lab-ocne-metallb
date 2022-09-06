@@ -1,4 +1,10 @@
 ---
+- name: Configure olcnectl completion
+  lineinfile:
+    line: source <(olcnectl completion bash)
+    path: ${HOME}/.bashrc
+  become: true
+  become_user: "{{ install_user}}"
 - name: Create MetalLB configuration file
   copy:
     src: files/{{ item }}

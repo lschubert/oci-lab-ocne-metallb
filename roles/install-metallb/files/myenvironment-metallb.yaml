@@ -20,9 +20,9 @@ environments:
           restrict-service-externalip-tls-cert: /etc/olcne/configs/certificates/restrict_external_ip/production/node.cert
           restrict-service-externalip-tls-key: /etc/olcne/configs/certificates/restrict_external
       - module: helm
-          name: myhelm
-          args:
-            helm-kubernetes-module: mycluster
+        name: myhelm
+        args:
+          helm-kubernetes-module: mycluster
       - module: metallb
         name: mymetallb
         args: 
