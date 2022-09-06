@@ -9,11 +9,11 @@
 #   vars_files: main.yml
 #   roles:
 #     - { role: configure-nodes }
-# - name: Install Modules
-#   hosts: ocne-operator
-#   vars_files: main.yml
-#   roles:
-#     - { role: install-metallb }
+- name: Install Modules
+  hosts: ocne-operator
+  vars_files: main.yml
+  roles:
+    - { role: install-metallb }
 - name: Install Application
   hosts: ocne-control[0]
   vars_files: main.yml
