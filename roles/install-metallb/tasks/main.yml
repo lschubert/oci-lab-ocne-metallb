@@ -53,3 +53,18 @@
 - name: Show installed modules
   debug:
     var: ocne_module_instances
+- name: Prepare Certificates storage
+  file:
+    path: /home/{{ install_user }}/certificates/
+    state: directory
+  become: true
+  become_user: "{{ install_user }}"  
+- name: Configure Certificates for CLI
+  file:
+    src: /etc/olcne/configs/certificates/restrict_external_ip/production/{{ item }}
+    dest: /home/{{ install_user }}/.olcne/certificates/{{ item }}
+    state: link
+  become: true
+  loop:
+    - node.cert
+    - node.key
