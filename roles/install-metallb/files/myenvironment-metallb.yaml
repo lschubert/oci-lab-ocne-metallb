@@ -18,7 +18,7 @@ environments:
           restrict-service-externalip: true
           restrict-service-externalip-ca-cert: /etc/olcne/configs/certificates/restrict_external_ip/production/ca.cert
           restrict-service-externalip-tls-cert: /etc/olcne/configs/certificates/restrict_external_ip/production/node.cert
-          restrict-service-externalip-tls-key: /etc/olcne/configs/certificates/restrict_external
+          restrict-service-externalip-tls-key: /etc/olcne/configs/certificates/restrict_external_ip/production/node.key
       - module: helm
         name: myhelm
         args:
