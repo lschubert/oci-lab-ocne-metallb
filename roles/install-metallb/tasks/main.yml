@@ -59,7 +59,7 @@
     dest: /home/{{ install_user }}/certificates/{{ item }}
     remote_src: true
     state: link
-  bekome: true
+  become: true
   loop:
     - node.cert
     - node.key

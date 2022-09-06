@@ -3,11 +3,13 @@
   copy:
     src: files/echo-oci-lb.yml
     dest: ${HOME}/echo-oci-lb.yml
+  become: true
   become_user: "{{ install_user }}"
 - name: Create LB Service
   shell: |
     kubectl create -f echo-oci-lb.yml
-  becom_user: "{{ install_user }}"
+  become: true
+  become_user: "{{ install_user }}"
   register: kubectl_create_app
 - name: DEBUG output
   debug:
@@ -16,7 +18,8 @@
 - name: Gather deployment 
   shell: |
     kubectl get deployment
-  becom_user: "{{ install_user }}"
+  become: true
+  become_user: "{{ install_user }}"
   register: kubectl_get_deployment
 - name: DEBUG output
   debug:
@@ -25,7 +28,8 @@
 - name: Gather service
   shell: |
     kubectl get svc
-  becom_user: "{{ install_user }}"
+  become: true
+  become_user: "{{ install_user }}"
   register: kubectl_get_svc
 - name: DEBUG output
   debug:
