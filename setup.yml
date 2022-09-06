@@ -4,7 +4,7 @@
   vars_files: main.yml
   roles:
     - { role: configure-executor }
-- name: Configure executor
+- name: Configure OCNE Nodes
   hosts: ocne-control, ocne-worker
   vars_files: main.yml
   roles:

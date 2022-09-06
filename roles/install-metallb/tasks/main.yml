@@ -1,27 +1,16 @@
 ---
 - name: Create MetalLB configuration file
   copy:
-    src: files/metallb-config.yaml
-    dest: ${HOME}/metallb-config.yaml
+    src: files/{{ item }}
+    dest: ${HOME}/{{ item }}
+  become: true
   become_user: "{{ install_user}}"
-- name: Add MetalLB module to Oracle Cloud Native Environment configuration file
-  blockinfile:
-    path: ${HOME}/myenvironment.yaml
-    block: |
-      - module: helm
-        name: myhelm
-        args:
-          helm-kubernetes-module: mycluster
-      - module: metallb
-        name: mymetallb
-        args: 
-          metallb-helm-module: myhelm 
-          helm-kubernetes-module: mycluster  
-          metallb-config: /home/oracle/metallb-config.yaml
-    become_user: "{{ install_user}}"
+  loop:
+    - metallb-config.yaml
+    - myenvironment-metallb.yaml
 - name: Create MetalLB module
   shell: |
-    olcnectl module create --config-file myenvironment.yaml
+    olcnectl module create --config-file myenvironment-metallb.yaml
   become_user: "{{ install_user}}"
   register: ocne_module_create
 - name: DEBUG output
@@ -30,7 +19,7 @@
   when: debug_output == true
 - name: Validate MetalLB module
   shell: |
-    olcnectl module validate --config-file myenvironment.yaml
+    olcnectl module validate --config-file myenvironment-metallb.yaml
   become_user: "{{ install_user}}"
   register: ocne_module_validate
 - name: DEBUG output
@@ -39,7 +28,7 @@
   when: debug_output == true
 - name: Install MetalLB module
   shell: |
-    olcnectl module install --config-file myenvironment.yaml
+    olcnectl module install --config-file myenvironment-metallb.yaml
   become_user: "{{ install_user}}"
   register: ocne_module_install
 - name: DEBUG output
@@ -48,7 +37,7 @@
   when: debug_output == true
 - name: Gather installed modules
   shell: |
-    olcnectl module instances --config-file myenvironment.yaml
+    olcnectl module instances --config-file myenvironment-metallb.yaml
   become_user: "{{ install_user}}"
   register: ocne_module_instances
 - name: Show installed modules
