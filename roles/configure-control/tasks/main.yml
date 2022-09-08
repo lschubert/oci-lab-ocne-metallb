@@ -1,5 +1,27 @@
 ---
-
+- name: Capture Loadbalancer IP address
+  shell: |
+    kubectl get svc -o jsonpath="{.status.loadBalancer.ingress[0].ip}" echo-lb-service
+  become: true
+  become_user: "{{ install_user }}"
+  register: external_ip_result
+- name: Capture Loadbalancer Port
+  shell: |
+    kubectl get svc -o jsonpath="{.spec.ports[0].port}" echo-lb-service
+  become: true
+  become_user: "{{ install_user }}"
+  register: lb_port_result
+- name: Set facts
+  set_fact:
+    lb_ip: "{{ external_ip_result.stdout }}"
+    lb_port: "{{ lb_port_result.stdout }}"
+- name: DEBUG output
+  debug:
+    var: "{{ item }}"
+  when: debug_output == true
+  loop:
+    - lb_ip
+    - lb_port
 - name: setting environment
   lineinfile:
     path: ~/.bashrc
