@@ -48,6 +48,12 @@ This automation is best executed within the Luna Lab environment using Visual St
     3.4. Make sure "oci_executor" variable in ```vars/main.yml``` is set to true 
 
     Save the file.
+
+    3.5. Start setup
+    
+    ```
+    ./start.sh 
+    ```
     
 # About this Luna Lab environment
 
