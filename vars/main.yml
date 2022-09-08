@@ -1,13 +1,13 @@
 ---
 ocne_control_ip:
-  - 141.147.59.37
-  - 130.61.68.40
-  - 132.226.193.83
-ocne_operator_ip: 130.162.54.20
+  - 141.147.62.69
+  - 129.159.245.111
+  - 150.230.148.4
+ocne_operator_ip: 141.147.55.203
 ocne_worker_ip:
-  - 130.162.50.3
-  - 141.144.244.169
-  - 141.147.2.210
+  - 130.61.135.235
+  - 141.144.243.197
+  - 144.24.176.199
 
 # ocne_module_metallb: true: enables metallb within the ocne cluster
 ocne_module_metallb: true

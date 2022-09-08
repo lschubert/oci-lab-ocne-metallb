@@ -38,6 +38,9 @@
   become: true
   become_user: "{{ install_user }}"
   register: kubectl_get_svc
+  retries: 10
+  delay: 30
+  until: '"echo-lb-service" in kubectl_get_svc.out'
 - name: DEBUG output
   debug:
     var: kubectl_get_svc
