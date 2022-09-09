@@ -50,9 +50,9 @@ This automation is best executed within the Luna Lab environment using Visual St
     Save the file.
 
     3.5. Start setup
-    
+
     ```
-    ./start.sh 
+    ./setup.sh 
     ```
     
 # About this Luna Lab environment
