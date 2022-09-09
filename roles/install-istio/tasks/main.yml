@@ -1,4 +1,12 @@
 ---
+- name: Create istio configuration file
+  copy:
+    src: files/{{ item }}
+    dest: ${HOME}/{{ item }}
+  become: true
+  become_user: "{{ install_user}}"
+  loop:
+    - myenvironment-metallb-istio.yaml
 - name: Create modules
   shell: |
     olcnectl module create --config-file ${HOME}/myenvironment-metallb-istio.yaml
