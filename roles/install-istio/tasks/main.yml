@@ -22,6 +22,15 @@
     - node.cert
     - node.key
     - ca.cert
+- name: Configure olcnectl environment settings
+  blockinfile:
+    path: ${HOME}/.bashrc
+    block: |
+      export OLCNE_SM_CA_PATH=/etc/olcne/configs/certificates/production/ca.cert
+      export OLCNE_SM_CERT_PATH=/etc/olcne/configs/certificates/production/node.cert
+      export OLCNE_SM_KEY_PATH=/etc/olcne/configs/certificates/production/node.key
+  become: true
+  become_user: "{{ install_user}}"
 # Steps to install and confure MetalLB
 - name: Create module configuration files
   copy:
