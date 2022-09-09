@@ -13,7 +13,8 @@
   hosts: ocne-operator
   vars_files: main.yml
   roles:
-    - { role: install-metallb }
+#    - { role: install-metallb }
+    - { role: install-istio }
 - name: Install Application
   hosts: ocne-control[0]
   vars_files: main.yml
@@ -24,3 +25,4 @@
   vars_files: main.yml
   roles:
     - { role: configure-control }
+

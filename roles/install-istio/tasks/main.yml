@@ -1,0 +1,40 @@
+---
+- name: Create modules
+  shell: |
+    olcnectl module create --config-file ${HOME}/myenvironment-metallb-istio.yaml
+  become: true
+  become_user: "{{ install_user}}"
+  register: ocne_module_create
+- name: DEBUG output
+  debug:
+    var: ocne_module_create
+  when: (debug_output == true) and (ocne_module_create.rc != 0)
+- name: Validate modules
+  shell: |
+    olcnectl module validate --config-file ${HOME}/myenvironment-metallb-istio.yaml
+  become: true
+  become_user: "{{ install_user}}"
+  register: ocne_module_validate
+- name: DEBUG output
+  debug:
+    var: ocne_module_validate
+  when: debug_output == true
+- name: Install modules
+  shell: |
+    olcnectl module install --config-file ${HOME}/myenvironment-metallb-istio.yaml
+  become: true
+  become_user: "{{ install_user}}"
+  register: ocne_module_install
+- name: DEBUG output
+  debug:
+    var: ocne_module_install
+  when: debug_output == true
+- name: Gather installed modules
+  shell: |
+    olcnectl module instances --config-file ${HOME}/myenvironment-metallb.yaml
+  become: true 
+  become_user: "{{ install_user}}"
+  register: ocne_module_instances
+- name: Show installed modules
+  debug:
+    var: ocne_module_instances
