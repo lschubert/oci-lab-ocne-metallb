@@ -6,6 +6,7 @@
   become: true
   become_user: "{{ install_user}}"
   loop:
+    - metallb-config.yaml
     - myenvironment-metallb-istio.yaml
 - name: Create modules
   shell: |

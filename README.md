@@ -13,7 +13,7 @@ This automation is best executed within the Luna Lab environment using Visual St
 
 1. Launch Lab
 
-    1.1. Wait until the lab ressources are provisioned. Setting up the underlying OKE cluster as pre-requisite is part of the free lab provisioning process and takes approximately 30 minutes to finish after launch. Unlike other Luna Labs, the Resources Tab on Luna Lab page does only show a checkmark once provisioning is finished (no resource details) 
+    1.1. Wait until the lab ressources are provisioned. Setting up the underlying OKE cluster as pre-requisite is part of the free lab provisioning process and takes approximately 30 minutes to finish after launch. The Resources Tab will show a checkamr and further details about provisioned resources once ready. 
 
 2. Checkout this git repo in Luna Lab Visual Studio Code
 
