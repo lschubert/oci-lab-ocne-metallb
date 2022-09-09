@@ -1,0 +1,12 @@
+[ocne-operator]
+{{ ocne_operator_ip }} ansible_user=opc
+
+[ocne-control]
+{% for control in ocne_control_ip %}
+{{ control }} ansible_user=opc
+{% endfor %}
+
+[ocne-worker]
+{% for worker in ocne_worker_ip %}
+{{ worker }} ansible_user=opc
+{% endfor %}

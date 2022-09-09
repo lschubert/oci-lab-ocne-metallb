@@ -1,0 +1,13 @@
+Host ocne-operator
+    HostName {{ ocne_operator_ip }}
+    User {{ install_user }}
+{% for control in ocne_control_ip %}
+Host ocne-control0{{loop.index}}
+    HostName {{ control }}
+    User {{ install_user }}
+{% endfor %}    
+{% for worker in ocne_worker_ip %}
+Host ocne-worker0{{loop.index}}
+    HostName {{ worker }}
+    User {{ install_user }}
+{% endfor %}

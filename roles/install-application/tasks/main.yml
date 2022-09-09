@@ -1,0 +1,48 @@
+---
+- name: Copy Application Configuration File
+  copy:
+    src: files/echo-oci-lb.yml
+    dest: ${HOME}/echo-oci-lb.yml
+  become: true
+  become_user: "{{ install_user }}"
+- name: Check LB Service
+  shell: |
+    kubectl get svc echo-lb-service
+  become: true
+  become_user: "{{ install_user }}"
+  register: lb_svc_result
+  ignore_errors: true
+- name: Create LB Service
+  shell: |
+    kubectl create -f ${HOME}/echo-oci-lb.yml
+  become: true
+  become_user: "{{ install_user }}"
+  register: kubectl_create_app
+  when: lb_svc_result.rc == 1
+- name: DEBUG output
+  debug:
+    var: kubectl_create_app
+  when: debug_output == true
+- name: Gather deployment 
+  shell: |
+    kubectl get deployment
+  become: true
+  become_user: "{{ install_user }}"
+  register: kubectl_get_deployment
+- name: DEBUG output
+  debug:
+    var: kubectl_get_deployment
+  when: debug_output == true
+- name: Gather service
+  shell: |
+    kubectl get svc
+  become: true
+  become_user: "{{ install_user }}"
+  register: kubectl_get_svc
+  retries: 10
+  delay: 30
+  until: '"echo-lb-service" in kubectl_get_svc.stdout'
+- name: DEBUG output
+  debug:
+    var: kubectl_get_svc
+  when: debug_output == true

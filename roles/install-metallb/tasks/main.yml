@@ -1,0 +1,73 @@
+---
+# Steps to configure olcnectl for proper use
+- name: Configure olcnectl completion
+  lineinfile:
+    line: source <(olcnectl completion bash)
+    path: ${HOME}/.bashrc
+  become: true
+  become_user: "{{ install_user}}"
+- name: Prepare Certificates storage
+  file:
+    path: /home/{{ install_user }}/.olcne/certificates/
+    state: directory
+  become: true
+  become_user: "{{ install_user }}"  
+- name: Configure Certificates for CLI
+  file:
+    src: /etc/olcne/configs/certificates/restrict_external_ip/production/{{ item }}
+    dest: /home/{{ install_user }}/.olcne/certificates/{{ item }}
+    state: link
+  become: true
+  loop:
+    - node.cert
+    - node.key
+    - ca.cert
+# Steps to install and confure MetalLB
+- name: Create MetalLB configuration file
+  copy:
+    src: files/{{ item }}
+    dest: ${HOME}/{{ item }}
+  become: true
+  become_user: "{{ install_user}}"
+  loop:
+    - metallb-config.yaml
+    - myenvironment-metallb.yaml
+- name: Create MetalLB module
+  shell: |
+    olcnectl module create --config-file ${HOME}/myenvironment-metallb.yaml
+  become: true
+  become_user: "{{ install_user}}"
+  register: ocne_module_create
+- name: DEBUG output
+  debug:
+    var: ocne_module_create
+  when: (debug_output == true) and (ocne_module_create.rc != 0)
+- name: Validate MetalLB module
+  shell: |
+    olcnectl module validate --config-file ${HOME}/myenvironment-metallb.yaml
+  become: true
+  become_user: "{{ install_user}}"
+  register: ocne_module_validate
+- name: DEBUG output
+  debug:
+    var: ocne_module_validate
+  when: debug_output == true
+- name: Install MetalLB module
+  shell: |
+    olcnectl module install --config-file ${HOME}/myenvironment-metallb.yaml
+  become: true
+  become_user: "{{ install_user}}"
+  register: ocne_module_install
+- name: DEBUG output
+  debug:
+    var: ocne_module_install
+  when: debug_output == true
+- name: Gather installed modules
+  shell: |
+    olcnectl module instances --config-file ${HOME}/myenvironment-metallb.yaml
+  become: true 
+  become_user: "{{ install_user}}"
+  register: ocne_module_instances
+- name: Show installed modules
+  debug:
+    var: ocne_module_instances
