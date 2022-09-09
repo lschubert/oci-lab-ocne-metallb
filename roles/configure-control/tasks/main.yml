@@ -24,8 +24,10 @@
     - lb_port
 - name: setting environment
   lineinfile:
-    path: ~/.bashrc
+    path: /home/{{ install_user }}/.bashrc
     line: "{{ item }}"
+  become: true
+  become_user: "{{ install_user }}"
   loop:
     - "export LB={{ lb_ip }}"
     - "export LBPORT={{ lb_port }}"
